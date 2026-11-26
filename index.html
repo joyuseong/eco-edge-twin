@@ -228,13 +228,13 @@ td:last-child,th:last-child{text-align:right;padding-right:0;font-family:var(--m
           <span id="fabText">꾹 눌러 모터 붙잡기</span>
         </button>
       </div>
-      <p id="capText" aria-live="polite">평소엔 QR만 읽습니다. 30 ms, 외부 통신 0. 가장 적은 전력으로 24시간 감시합니다.</p>
+      <p id="capText" aria-live="polite">평소엔 QR만 읽습니다. 30 ms, 이미지 전송 0. 가장 적은 전력으로 24시간 감시합니다.</p>
     </div>
     <div class="ctx">
       <div class="tiles e" id="tiles">
         <div class="tile"><span id="t0l">판정 시간</span><b><span id="t0v">30</span><small id="t0u">ms</small></b><em id="t0s">QR 판독</em></div>
         <div class="tile"><span id="t1l">현장 전력</span><b><span id="t1v">13.0</span><small id="t1u">W</small></b><em id="t1s">기존 GPU 350 W</em></div>
-        <div class="tile"><span id="t2l">외부 통신</span><b><span id="t2v">0</span><small id="t2u">B</small></b><em id="t2s">평상시</em></div>
+        <div class="tile"><span id="t2l">이미지 전송</span><b><span id="t2v">0</span><small id="t2u">B</small></b><em id="t2s">평상시</em></div>
       </div>
       <div class="scopeWrap" id="scopeWrap" hidden>
         <div class="scr"><canvas id="scope"></canvas><small>모터 전류</small><b id="scopeV">0.62×</b></div>
@@ -268,7 +268,7 @@ td:last-child,th:last-child{text-align:right;padding-right:0;font-family:var(--m
           <div><b>12<small>ms</small></b><span>YOLOv8s 추론 시간</span></div>
           <div><b>1.5<small>W</small></b><span>AI 가속기 소비전력</span></div>
           <div><b>95.9<small>%</small></b><span>노드 1대 연간 전력 절감</span></div>
-          <div><b>5<small>개 권역</small></b><span>하나의 노드 규격</span></div>
+          <div><b>5<small>개 대학</small></b><span>4개 권역 · 하나의 규격</span></div>
         </div>
       </section>
 
@@ -285,7 +285,7 @@ td:last-child,th:last-child{text-align:right;padding-right:0;font-family:var(--m
           <tr><td>기준선: RTX 3090 (TGP), 24시간 × 365일</td><td>350 W</td></tr>
           <tr><td>제안: Pi 5 + Hailo-8L 시스템 상시</td><td>약 13 W</td></tr>
           <tr><td>이벤트 3D 연산 (가정값, 현장에 따라 조정)</td><td>100건/일 × 3초</td></tr>
-          <tr><td>전력배출계수 (소비단, 2024년 승인 국가 계수)</td><td>0.4173</td></tr>
+          <tr><td>전력배출계수 (2025년 승인, 2023년 소비단)</td><td>0.4173</td></tr>
         </table></div>
       </section>
 
@@ -329,9 +329,9 @@ td:last-child,th:last-child{text-align:right;padding-right:0;font-family:var(--m
       </section>
 
       <section>
-        <h3>5개 권역 역할</h3>
+        <h3>4개 권역 · 5개 대학의 역할 (제안)</h3>
         <div class="tw"><table class="regions">
-          <tr><td>전북</td><td>중앙 그린 GPU 서버 · 3D 아카이브 데이터베이스</td></tr>
+          <tr><td>전북</td><td>공용 GPU 서버 운영 · 3D 아카이브 데이터베이스</td></tr>
           <tr><td>대경</td><td>제조 라인 엣지 노드 설치 · 비정상 부하 케이스 수집</td></tr>
           <tr><td>울산</td><td>모터 보호 하드웨어 설계 · 근골격계 부담 저감 실증</td></tr>
           <tr><td>부산</td><td>항만 물류 적용 · 비즈니스 모델</td></tr>
@@ -796,11 +796,11 @@ function tile(i,l,v,u,s){if(l!==null)setT($('#t'+i+'l'),l);setT($('#t'+i+'v'),v)
 var CHIPS={0:['설비 설명','c0'],1:['1계층 · 상시 엣지',''],2:['2계층 · 선택적 3D','c2'],3:['3계층 · 모터 보호','c3'],t:['3계층 · 차단(TRIP)','ct'],r:['통합 · 원인 역추적','c2']};
 var lockUntil=0;
 function say(layer,text,hold,force){if(!force&&sim.t<lockUntil&&layer!=='t')return;var c=CHIPS[layer];ui.chip.textContent=c[0];ui.chip.className='chip '+c[1];ui.text.textContent=text;sim.idleAt=sim.t+(hold||6);}
-var IDLE='평소엔 QR만 읽습니다. 30 ms, 외부 통신 0. 가장 적은 전력으로 24시간 감시합니다.';
+var IDLE='평소엔 QR만 읽습니다. 30 ms, 이미지 전송 0. 가장 적은 전력으로 24시간 감시합니다.';
 var ctxMode='edge';
 function setMode(m){if(m===ctxMode)return;ctxMode=m;ui.tiles.hidden=m==='motor';ui.scopeWrap.hidden=m!=='motor';
   if(m==='motor'){sizeScope();}
-  else if(m==='edge'){ui.tiles.className='tiles e';tile(0,'판정 시간',sim.edgeV,'ms',sim.edgeS);tile(1,'현장 전력','13.0','W','기존 GPU 350 W');tile(2,'외부 통신','0','B','평상시');}
+  else if(m==='edge'){ui.tiles.className='tiles e';tile(0,'판정 시간',sim.edgeV,'ms',sim.edgeS);tile(1,'현장 전력','13.0','W','기존 GPU 350 W');tile(2,'이미지 전송','0','B','평상시');}
   else{ui.tiles.className='tiles c';tile(0,'촬영','2','장','RGB 사진만');tile(1,'3D 추론','103','ms','DUSt3R');tile(2,'전체 소요','0.0','s','촬영 → 완성');}}
 function edgeTile(v,s){sim.edgeV=v;sim.edgeS=s;if(ctxMode==='edge')tile(0,null,v,null,s);}
 var recTimer=0;
@@ -865,7 +865,7 @@ function onScan(b){scanPulse=1;
   if(b.type==='A'||b.type==='B'||b.type==='over'){
     detect(b,'QR 30 ms · '+b.cls+'라인','',1.7);edgeTile('30','QR 판독');
     if(b.type!=='over'&&sim.motor==='run'&&!sim.l2&&sim.t>sim.idleAt-3)
-      say(1,b.cls==='B'?'QR 판독 30 ms. '+b.name+' → 푸셔가 B슈트로 바로 분류합니다.':'QR 판독 30 ms. '+b.name+' → A라인 통과. 외부 통신은 0입니다.');
+      say(1,b.cls==='B'?'QR 판독 30 ms. '+b.name+' → 푸셔가 B슈트로 바로 분류합니다.':'QR 판독 30 ms. '+b.name+' → A라인 통과. 이미지 전송은 0입니다.');
   }else if(b.type==='qr'){
     detect(b,'QR 판독 실패','bad',.7);edgeTile('—','QR 판독 실패');shot('scan',3.4);
     say(1,'QR이 훼손됐습니다. 이럴 때만 1.5 W 가속기를 깨웁니다.');
